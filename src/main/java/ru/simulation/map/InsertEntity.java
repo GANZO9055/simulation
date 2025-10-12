@@ -17,7 +17,7 @@ public class InsertEntity {
             case 2 -> new Tree();
             case 3 -> new Herbivore(coordinate);
             case 4 -> new Predator(coordinate);
-            default -> new Ground();
+            default -> null;
         };
     }
 }

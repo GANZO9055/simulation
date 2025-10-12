@@ -65,7 +65,7 @@ public class BFSPathFinder implements PathFinder {
 
         Entity entity = map.getEntity(coordinate);
 
-        if (entity instanceof Ground) {
+        if (entity == null) {
             return true;
         }
         if (entity instanceof Rock || entity instanceof Tree) {

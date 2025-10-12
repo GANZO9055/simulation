@@ -12,7 +12,7 @@ public class MapEntity {
     private final Map<Coordinate, Entity> map = new HashMap<>();
     private final InsertEntity insertEntity = new InsertEntity();
 
-    public void setMap(Coordinate coordinate, Entity entity) {
+    public void addEntity(Coordinate coordinate, Entity entity) {
         map.put(coordinate, entity);
     }
 
@@ -23,7 +23,7 @@ public class MapEntity {
     public void createDefaultMap() {
         for (int x = 0; x < DEFAULT_SIZE_BY_X; x++) {
             for (int y = 0; y < DEFAULT_SIZE_BY_Y; y++) {
-                setMap(
+                addEntity(
                         new Coordinate(x, y),
                         insertEntity.entityGeneration(new Coordinate(x, y))
                 );
