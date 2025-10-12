@@ -11,7 +11,7 @@ public class Herbivore extends Creature {
 
     @Override
     public void makeMove() {
-
+        super.makeMove();
     }
 
     @Override

@@ -10,7 +10,7 @@ public class Predator extends Creature {
 
     @Override
     public void makeMove() {
-
+        super.makeMove();
     }
 
     @Override

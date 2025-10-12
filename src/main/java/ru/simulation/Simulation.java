@@ -1,10 +1,11 @@
 package ru.simulation;
 
-import ru.simulation.map.MapConsoleRender;
+import ru.simulation.rendering.MapConsoleRender;
+import ru.simulation.rendering.Render;
 
 public class Simulation {
     public static void main(String[] args) {
-        MapConsoleRender consoleRender = new MapConsoleRender();
+        Render consoleRender = new MapConsoleRender();
 
         consoleRender.render();
     }

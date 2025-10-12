@@ -1,6 +1,8 @@
 package ru.simulation.entity.creature;
 
 import ru.simulation.entity.Entity;
+import ru.simulation.search_path.BFSPathFinder;
+import ru.simulation.search_path.PathFinder;
 
 public abstract class Creature extends Entity {
     private int speed;
@@ -38,5 +40,8 @@ public abstract class Creature extends Entity {
         this.coordinate = coordinate;
     }
 
-    public abstract void makeMove();
+    public void makeMove() {
+        PathFinder searchPath = new BFSPathFinder();
+
+    };
 }
