@@ -2,8 +2,11 @@ package ru.simulation.map;
 
 import ru.simulation.entity.creature.Coordinate;
 import ru.simulation.entity.Entity;
+import ru.simulation.entity.creature.Creature;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MapEntity {
@@ -14,6 +17,14 @@ public class MapEntity {
 
     public void addEntity(Coordinate coordinate, Entity entity) {
         map.put(coordinate, entity);
+    }
+
+    public Entity getEntity(Coordinate coordinate) {
+        return map.get(coordinate);
+    }
+
+    public void removeEntity(Coordinate coordinate) {
+        map.remove(coordinate);
     }
 
     public Map<Coordinate, Entity> getMap() {
@@ -36,15 +47,36 @@ public class MapEntity {
                 && (coordinate.y() >= 0 && coordinate.y() < DEFAULT_SIZE_BY_Y);
     }
 
-    public Entity getEntity(Coordinate coordinate) {
-        return map.get(coordinate);
+    public void moveEntity(Creature entity, Coordinate from, Coordinate to) {
+        map.remove(from);
+        map.put(to, entity);
     }
 
-    public void singleMoveCreature() {
-
+    public <T extends Entity> List<Coordinate> getCoordinatesByType(Class<T> type) {
+        List<Coordinate> result = new ArrayList<>();
+        for (var value : map.entrySet()) {
+            if (type.isInstance(value.getValue())) {
+                result.add(value.getKey());
+            }
+        }
+        return result;
     }
 
-    public void multipleCreatureMoves() {
+    public Coordinate findNearestCoordinate(Coordinate from, List<Coordinate> targets) {
+        Coordinate nearest = null;
+        int minDistance = Integer.MAX_VALUE;
 
+        for (Coordinate target : targets) {
+            int distance = calculationDistance(from, target);
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearest = target;
+            }
+        }
+        return nearest;
+    }
+
+    private int calculationDistance(Coordinate from, Coordinate target) {
+        return Math.abs(from.x() - target.x()) + Math.abs(from.y() - target.y());
     }
 }
