@@ -48,8 +48,8 @@ public class MapEntity {
     }
 
     public void moveEntity(Creature entity, Coordinate from, Coordinate to) {
-        map.remove(from);
-        map.put(to, entity);
+        removeEntity(from);
+        addEntity(to, entity);
     }
 
     public <T extends Entity> List<Coordinate> getCoordinatesByType(Class<T> type) {
