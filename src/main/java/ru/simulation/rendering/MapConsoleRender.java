@@ -9,10 +9,8 @@ import java.util.Map;
 public class MapConsoleRender implements Render {
     private static final int DEFAULT_SIZE_BY_X = 10;
     private static final int DEFAULT_SIZE_BY_Y = 10;
-    MapEntity map = new MapEntity();
 
-    public void render() {
-        map.createDefaultMap();
+    public void render(MapEntity map) {
         Map<Coordinate, Entity> entityMap = map.getMap();
         StringBuilder mapConsole = new StringBuilder();
         for (int x = 0; x < DEFAULT_SIZE_BY_X; x++) {
