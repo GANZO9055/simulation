@@ -1,8 +1,6 @@
 package ru.simulation;
 
-import ru.simulation.action.Action;
-import ru.simulation.action.InitializationAction;
-import ru.simulation.action.MoveAllCreatureAction;
+import ru.simulation.action.*;
 import ru.simulation.map.MapEntity;
 import ru.simulation.rendering.MapConsoleRender;
 import ru.simulation.rendering.Render;
@@ -21,6 +19,8 @@ public class Simulation {
         this.render = new MapConsoleRender();
         this.actions = List.of(
                 new InitializationAction(),
+                new InsertGrassAction(),
+                new InsertHerbivoreAction(),
                 new MoveAllCreatureAction()
         );
     }
@@ -31,15 +31,17 @@ public class Simulation {
     }
 
     public void nextTurn() {
+        checkEntity();
         counterOfMoves++;
-        actions.get(1).perform(map);
+        actions.get(3).perform(map);
         render.render(map);
     }
 
     public void startSimulation(int value) {
         while(value != 0) {
+            checkEntity();
             counterOfMoves++;
-            actions.get(1).perform(map);
+            actions.get(3).perform(map);
             render.render(map);
             value--;
         }
@@ -47,5 +49,23 @@ public class Simulation {
 
     public int getCounterOfMoves() {
         return counterOfMoves;
+    }
+
+    private void checkEntity() {
+        map.counterGrassAndHerbivore();
+        if (counterOfMoves != 0 && checkQuantityGrass()) {
+            actions.get(1).perform(map);
+        }
+        if (counterOfMoves != 0 && checkQuantityHerbivore()) {
+            actions.get(2).perform(map);
+        }
+    }
+
+    private boolean checkQuantityGrass() {
+        return map.getCountGrass() <= 2;
+    }
+
+    private boolean checkQuantityHerbivore() {
+        return map.getCountHerbivore() <= 2;
     }
 }

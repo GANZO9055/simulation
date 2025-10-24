@@ -5,12 +5,15 @@ import ru.simulation.entity.creature.Coordinate;
 import ru.simulation.entity.creature.Herbivore;
 import ru.simulation.entity.creature.Predator;
 
-import java.util.Random;
-
 public class InsertEntity {
+    private final GenerationNumber generationNumber;
+
+    public InsertEntity() {
+        this.generationNumber = new GenerationNumber();
+    }
+
     public Entity entityGeneration(Coordinate coordinate) {
-        Random random = new Random();
-        int value = random.nextInt(20);
+        int value = generationNumber.getNumber(20);
         return switch (value) {
             case 0, 1 -> new Grass();
             case 2, 3 -> new Rock();
@@ -19,5 +22,13 @@ public class InsertEntity {
             case 8 -> new Predator(coordinate);
             default -> null;
         };
+    }
+
+    public Entity grassGeneration() {
+        return new Grass();
+    }
+
+    public Entity herbivoreGeneration(Coordinate coordinate) {
+        return new Herbivore(coordinate);
     }
 }

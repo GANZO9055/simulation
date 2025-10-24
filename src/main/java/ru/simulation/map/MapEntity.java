@@ -1,8 +1,10 @@
 package ru.simulation.map;
 
+import ru.simulation.entity.Grass;
 import ru.simulation.entity.creature.Coordinate;
 import ru.simulation.entity.Entity;
 import ru.simulation.entity.creature.Creature;
+import ru.simulation.entity.creature.Herbivore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,8 +14,12 @@ import java.util.Map;
 public class MapEntity {
     private static final int DEFAULT_SIZE_BY_X = 10;
     private static final int DEFAULT_SIZE_BY_Y = 10;
+    private static final int QUANTITY_ENTITY = 10;
     private final Map<Coordinate, Entity> map = new HashMap<>();
     private final InsertEntity insertEntity = new InsertEntity();
+    private final GenerationNumber generationNumber = new GenerationNumber();
+    private int countGrass = 0;
+    private int countHerbivore = 0;
 
     public void addEntity(Coordinate coordinate, Entity entity) {
         map.put(coordinate, entity);
@@ -31,6 +37,14 @@ public class MapEntity {
         return new HashMap<>(map);
     }
 
+    public int getCountGrass() {
+        return countGrass;
+    }
+
+    public int getCountHerbivore() {
+        return countHerbivore;
+    }
+
     public void createDefaultMap() {
         for (int x = 0; x < DEFAULT_SIZE_BY_X; x++) {
             for (int y = 0; y < DEFAULT_SIZE_BY_Y; y++) {
@@ -38,6 +52,48 @@ public class MapEntity {
                         new Coordinate(x, y),
                         insertEntity.entityGeneration(new Coordinate(x, y))
                 );
+            }
+        }
+    }
+
+    public void counterGrassAndHerbivore() {
+        countGrass = 0;
+        countHerbivore = 0;
+        for (int x = 0; x < DEFAULT_SIZE_BY_X; x++) {
+            for (int y = 0; y < DEFAULT_SIZE_BY_Y; y++) {
+                Entity entity = getEntity(new Coordinate(x,y));
+                if (entity instanceof Grass) {
+                    countGrass++;
+                }
+                if (entity instanceof Herbivore) {
+                    countHerbivore++;
+                }
+            }
+        }
+    }
+
+    public void insertGrass() {
+        int quantity = generationNumber.getNumber(QUANTITY_ENTITY);
+        while (quantity != 0) {
+            int x = generationNumber.getNumber(DEFAULT_SIZE_BY_X);
+            int y = generationNumber.getNumber(DEFAULT_SIZE_BY_Y);
+            Coordinate newCoordinate = new Coordinate(x, y);
+            if (getEntity(newCoordinate) == null) {
+                addEntity(newCoordinate, insertEntity.grassGeneration());
+                quantity--;
+            }
+        }
+    }
+
+    public void insertHerbivore() {
+        int quantity = generationNumber.getNumber(QUANTITY_ENTITY);
+        while (quantity != 0) {
+            int x = generationNumber.getNumber(DEFAULT_SIZE_BY_X);
+            int y = generationNumber.getNumber(DEFAULT_SIZE_BY_Y);
+            Coordinate newCoordinate = new Coordinate(x, y);
+            if (getEntity(newCoordinate) == null) {
+                addEntity(newCoordinate, insertEntity.herbivoreGeneration(newCoordinate));
+                quantity--;
             }
         }
     }
