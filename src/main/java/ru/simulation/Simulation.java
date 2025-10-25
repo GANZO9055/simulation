@@ -38,6 +38,10 @@ public class Simulation {
     }
 
     public void startSimulation(int value) {
+        if (value <= 0 || value > 100) {
+            System.out.println("Ошибка! Укажите значения от 1 до 100");
+            return;
+        }
         while(value != 0) {
             checkEntity();
             counterOfMoves++;
