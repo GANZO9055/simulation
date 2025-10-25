@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Predator extends Creature {
     private static final int DEFAULT_HP = 100;
-    private static final int DEFAULT_SPEED = 3;
+    private static final int DEFAULT_SPEED = 2;
     private static final int DEFAULT_ATTACK = 50;
 
     public Predator(Coordinate coordinate) {

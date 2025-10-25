@@ -73,29 +73,11 @@ public class MapEntity {
     }
 
     public void insertGrass() {
-        int quantity = generationNumber.getNumber(QUANTITY_ENTITY);
-        while (quantity != 0) {
-            int x = generationNumber.getNumber(DEFAULT_SIZE_BY_X);
-            int y = generationNumber.getNumber(DEFAULT_SIZE_BY_Y);
-            Coordinate newCoordinate = new Coordinate(x, y);
-            if (getEntity(newCoordinate) == null) {
-                addEntity(newCoordinate, insertEntity.grassGeneration());
-                quantity--;
-            }
-        }
+        insertGrassOrHerbivore(1);
     }
 
     public void insertHerbivore() {
-        int quantity = generationNumber.getNumber(QUANTITY_ENTITY);
-        while (quantity != 0) {
-            int x = generationNumber.getNumber(DEFAULT_SIZE_BY_X);
-            int y = generationNumber.getNumber(DEFAULT_SIZE_BY_Y);
-            Coordinate newCoordinate = new Coordinate(x, y);
-            if (getEntity(newCoordinate) == null) {
-                addEntity(newCoordinate, insertEntity.herbivoreGeneration(newCoordinate));
-                quantity--;
-            }
-        }
+        insertGrassOrHerbivore(2);
     }
 
     public boolean checkCoordinate(Coordinate coordinate) {
@@ -134,5 +116,20 @@ public class MapEntity {
 
     private int calculationDistance(Coordinate from, Coordinate target) {
         return Math.abs(from.x() - target.x()) + Math.abs(from.y() - target.y());
+    }
+
+    private void insertGrassOrHerbivore(int number) {
+        int quantity = generationNumber.getNumber(QUANTITY_ENTITY);
+        while (quantity != 0) {
+            int x = generationNumber.getNumber(DEFAULT_SIZE_BY_X);
+            int y = generationNumber.getNumber(DEFAULT_SIZE_BY_Y);
+            Coordinate newCoordinate = new Coordinate(x, y);
+            Entity newEntity = number == 1 ? insertEntity.grassGeneration()
+                    : insertEntity.herbivoreGeneration(newCoordinate);
+            if (getEntity(newCoordinate) == null) {
+                addEntity(newCoordinate, newEntity);
+                quantity--;
+            }
+        }
     }
 }

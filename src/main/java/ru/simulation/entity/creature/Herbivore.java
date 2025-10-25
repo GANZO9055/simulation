@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Herbivore extends Creature {
     private static final int DEFAULT_HP = 100;
-    private static final int DEFAULT_SPEED = 2;
+    private static final int DEFAULT_SPEED = 1;
 
     public Herbivore(Coordinate coordinate) {
         super(DEFAULT_HP, DEFAULT_SPEED, coordinate);
