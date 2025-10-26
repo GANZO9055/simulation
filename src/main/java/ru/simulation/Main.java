@@ -1,8 +1,8 @@
 package ru.simulation;
 
-import ru.simulation.map.WorldMap;
+import ru.simulation.game_map.WorldMap;
 import ru.simulation.rendering.MapConsoleRender;
-import ru.simulation.rendering.Render;
+import ru.simulation.rendering.Renderer;
 
 import java.util.Scanner;
 
@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
         WorldMap worldMap = new WorldMap();
-        Render render = new MapConsoleRender();
+        Renderer render = new MapConsoleRender();
         Simulation simulation = new Simulation(worldMap, render);
         while (true) {
             System.out.println("Произвести один ход? Введите 1");

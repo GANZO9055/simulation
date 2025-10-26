@@ -2,8 +2,8 @@ package ru.simulation;
 
 import ru.simulation.action.*;
 import ru.simulation.action.Action;
-import ru.simulation.map.WorldMap;
-import ru.simulation.rendering.Render;
+import ru.simulation.game_map.WorldMap;
+import ru.simulation.rendering.Renderer;
 
 import java.util.List;
 import java.util.Scanner;
@@ -13,11 +13,11 @@ public class Simulation {
 
     private final WorldMap map;
     private int counterOfMoves;
-    private final Render render;
+    private final Renderer render;
     private final List<Action> initActions;
     private final List<Action> turnActions;
 
-    public Simulation(WorldMap map, Render render) {
+    public Simulation(WorldMap map, Renderer render) {
         this.map = map;
         this.render = render;
         this.counterOfMoves = 0;

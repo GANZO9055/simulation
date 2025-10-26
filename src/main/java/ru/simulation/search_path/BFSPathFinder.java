@@ -1,10 +1,10 @@
 package ru.simulation.search_path;
 
 import ru.simulation.entity.*;
-import ru.simulation.entity.creature.Coordinate;
+import ru.simulation.game_map.Coordinate;
 import ru.simulation.entity.creature.Herbivore;
 import ru.simulation.entity.creature.Predator;
-import ru.simulation.map.MapEntity;
+import ru.simulation.game_map.WorldMap;
 
 import java.util.*;
 
@@ -20,7 +20,7 @@ public class BFSPathFinder implements PathFinder {
     @Override
     public List<Coordinate> findPath(Coordinate start,
                                      Coordinate target,
-                                     MapEntity map,
+                                     WorldMap map,
                                      Class<? extends Entity> type) {
         Queue<Coordinate> queue = new LinkedList<>();
         Map<Coordinate, Coordinate> parentMap = new HashMap<>();
@@ -57,7 +57,7 @@ public class BFSPathFinder implements PathFinder {
         return List.of();
     }
 
-    private boolean isValid(Coordinate coordinate, MapEntity map, Class<? extends Entity> type) {
+    private boolean isValid(Coordinate coordinate, WorldMap map, Class<? extends Entity> type) {
 
         if (!map.checkCoordinate(coordinate)) {
             return false;
