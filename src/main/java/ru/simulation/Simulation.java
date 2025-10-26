@@ -1,75 +1,88 @@
 package ru.simulation;
 
 import ru.simulation.action.*;
-import ru.simulation.map.MapEntity;
-import ru.simulation.rendering.MapConsoleRender;
+import ru.simulation.action.Action;
+import ru.simulation.map.WorldMap;
 import ru.simulation.rendering.Render;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Simulation {
-    private final MapEntity map;
+    private static final int STOP_SIMULATION = 1;
+
+    private final WorldMap map;
     private int counterOfMoves;
     private final Render render;
-    private final List<Action> actions;
+    private final List<Action> initActions;
+    private final List<Action> turnActions;
 
-    public Simulation() {
-        this.map = new MapEntity();
+    public Simulation(WorldMap map, Render render) {
+        this.map = map;
+        this.render = render;
         this.counterOfMoves = 0;
-        this.render = new MapConsoleRender();
-        this.actions = List.of(
-                new InitializationAction(),
+        this.initActions = List.of(
+                new InitializationAction()
+        );
+        this.turnActions = List.of(
                 new InsertGrassAction(),
                 new InsertHerbivoreAction(),
                 new MoveAllCreatureAction()
         );
+        initialization();
     }
 
     public void initialization() {
-        actions.get(0).perform(map);
+        for (Action action : initActions) {
+            action.perform(map);
+        }
         render.render(map);
     }
 
     public void nextTurn() {
-        checkEntity();
+        for (Action action : turnActions) {
+            action.perform(map);
+        }
         counterOfMoves++;
-        actions.get(3).perform(map);
         render.render(map);
     }
 
-    public void startSimulation(int value) {
-        if (value <= 0 || value > 100) {
-            System.out.println("Ошибка! Укажите значения от 1 до 100");
-            return;
-        }
-        while(value != 0) {
-            checkEntity();
-            counterOfMoves++;
-            actions.get(3).perform(map);
-            render.render(map);
-            value--;
+    public void startSimulation() {
+        Runnable runnable = () -> {
+            while(true) {
+                for (Action action : turnActions) {
+                    action.perform(map);
+                }
+                counterOfMoves++;
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+                render.render(map);
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+        pauseSimulation(thread);
+    }
+
+    public void pauseSimulation(Thread thread) {
+        System.out.println("Остановить симуляцию?");
+        System.out.println("Введите 1, если да!");
+        Scanner input = new Scanner(System.in);
+        while (true) {
+            int number = input.nextInt();
+            if (number == STOP_SIMULATION) {
+                thread.interrupt();
+                return;
+            }
+            System.out.println("Неправильное число, введите 1, чтобы остановить симуляцию!");
         }
     }
 
     public int getCounterOfMoves() {
         return counterOfMoves;
-    }
-
-    private void checkEntity() {
-        map.counterGrassAndHerbivore();
-        if (counterOfMoves != 0 && checkQuantityGrass()) {
-            actions.get(1).perform(map);
-        }
-        if (counterOfMoves != 0 && checkQuantityHerbivore()) {
-            actions.get(2).perform(map);
-        }
-    }
-
-    private boolean checkQuantityGrass() {
-        return map.getCountGrass() <= 2;
-    }
-
-    private boolean checkQuantityHerbivore() {
-        return map.getCountHerbivore() <= 2;
     }
 }

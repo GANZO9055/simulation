@@ -1,7 +1,6 @@
 package ru.simulation.map;
 
 import ru.simulation.entity.Grass;
-import ru.simulation.entity.creature.Coordinate;
 import ru.simulation.entity.Entity;
 import ru.simulation.entity.creature.Creature;
 import ru.simulation.entity.creature.Herbivore;
@@ -11,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MapEntity {
+public class WorldMap {
     private static final int DEFAULT_SIZE_BY_X = 10;
     private static final int DEFAULT_SIZE_BY_Y = 10;
     private static final int QUANTITY_ENTITY = 10;
