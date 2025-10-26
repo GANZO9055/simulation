@@ -1,7 +1,6 @@
-package ru.simulation.map;
+package ru.simulation.game_map;
 
 import ru.simulation.entity.*;
-import ru.simulation.entity.creature.Coordinate;
 import ru.simulation.entity.creature.Herbivore;
 import ru.simulation.entity.creature.Predator;
 

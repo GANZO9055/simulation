@@ -1,4 +1,4 @@
-package ru.simulation.map;
+package ru.simulation.game_map;
 
 import java.util.Random;
 

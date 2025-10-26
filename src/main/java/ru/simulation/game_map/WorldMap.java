@@ -1,4 +1,4 @@
-package ru.simulation.map;
+package ru.simulation.game_map;
 
 import ru.simulation.entity.Grass;
 import ru.simulation.entity.Entity;
@@ -14,26 +14,26 @@ public class WorldMap {
     private static final int DEFAULT_SIZE_BY_X = 10;
     private static final int DEFAULT_SIZE_BY_Y = 10;
     private static final int QUANTITY_ENTITY = 10;
-    private final Map<Coordinate, Entity> map = new HashMap<>();
+    private final Map<Coordinate, Entity> entities = new HashMap<>();
     private final InsertEntity insertEntity = new InsertEntity();
     private final GenerationNumber generationNumber = new GenerationNumber();
     private int countGrass = 0;
     private int countHerbivore = 0;
 
     public void addEntity(Coordinate coordinate, Entity entity) {
-        map.put(coordinate, entity);
+        entities.put(coordinate, entity);
     }
 
     public Entity getEntity(Coordinate coordinate) {
-        return map.get(coordinate);
+        return entities.get(coordinate);
     }
 
     public void removeEntity(Coordinate coordinate) {
-        map.remove(coordinate);
+        entities.remove(coordinate);
     }
 
-    public Map<Coordinate, Entity> getMap() {
-        return new HashMap<>(map);
+    public Map<Coordinate, Entity> getEntities() {
+        return new HashMap<>(entities);
     }
 
     public int getCountGrass() {
@@ -91,7 +91,7 @@ public class WorldMap {
 
     public <T extends Entity> List<Coordinate> getCoordinatesByType(Class<T> type) {
         List<Coordinate> result = new ArrayList<>();
-        for (var value : map.entrySet()) {
+        for (var value : entities.entrySet()) {
             if (type.isInstance(value.getValue())) {
                 result.add(value.getKey());
             }
