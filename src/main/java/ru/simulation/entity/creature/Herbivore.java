@@ -1,7 +1,8 @@
 package ru.simulation.entity.creature;
 
 import ru.simulation.entity.Grass;
-import ru.simulation.map.MapEntity;
+import ru.simulation.game_map.Coordinate;
+import ru.simulation.game_map.WorldMap;
 
 import java.util.List;
 
@@ -14,19 +15,14 @@ public class Herbivore extends Creature {
     }
 
     @Override
-    protected Coordinate findTarget(MapEntity map) {
+    protected Coordinate findTarget(WorldMap map) {
         List<Coordinate> grasses = map.getCoordinatesByType(Grass.class);
         return map.findNearestCoordinate(getCoordinate(), grasses);
     }
 
     @Override
-    protected void performAction(MapEntity map, Coordinate target) {
+    protected void performAction(WorldMap map, Coordinate target) {
         map.removeEntity(target);
         setHp(DEFAULT_HP);
-    }
-
-    @Override
-    public String imageOutputToConsole() {
-        return "🐇";
     }
 }

@@ -1,7 +1,8 @@
 package ru.simulation.entity.creature;
 
 import ru.simulation.entity.Entity;
-import ru.simulation.map.MapEntity;
+import ru.simulation.game_map.Coordinate;
+import ru.simulation.game_map.WorldMap;
 import ru.simulation.search_path.BFSPathFinder;
 import ru.simulation.search_path.PathFinder;
 
@@ -43,7 +44,7 @@ public abstract class Creature extends Entity {
         this.coordinate = coordinate;
     }
 
-    public void makeMove(MapEntity map) {
+    public void makeMove(WorldMap map) {
 
         for (int i = 0; i < speed; i++) {
             Coordinate target = findTarget(map);
@@ -61,7 +62,7 @@ public abstract class Creature extends Entity {
         return Math.abs(coordinate.x() - target.x()) + Math.abs(coordinate.y() - target.y()) == 1;
     }
 
-    private void moveTowards(MapEntity map, Coordinate target) {
+    private void moveTowards(WorldMap map, Coordinate target) {
         PathFinder pathFinder = new BFSPathFinder();
         List<Coordinate> path = pathFinder.findPath(coordinate, target, map, this.getClass());
         if (path.size() > 1) {
@@ -71,6 +72,6 @@ public abstract class Creature extends Entity {
         }
     }
 
-    protected abstract Coordinate findTarget(MapEntity map);
-    protected abstract void performAction(MapEntity map, Coordinate target);
+    protected abstract Coordinate findTarget(WorldMap map);
+    protected abstract void performAction(WorldMap map, Coordinate target);
 }

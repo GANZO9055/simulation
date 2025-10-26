@@ -1,13 +1,14 @@
 package ru.simulation.entity.creature;
 
 import ru.simulation.entity.Entity;
-import ru.simulation.map.MapEntity;
+import ru.simulation.game_map.Coordinate;
+import ru.simulation.game_map.WorldMap;
 
 import java.util.List;
 
 public class Predator extends Creature {
     private static final int DEFAULT_HP = 100;
-    private static final int DEFAULT_SPEED = 2;
+    private static final int DEFAULT_SPEED = 1;
     private static final int DEFAULT_ATTACK = 50;
 
     public Predator(Coordinate coordinate) {
@@ -15,13 +16,13 @@ public class Predator extends Creature {
     }
 
     @Override
-    protected Coordinate findTarget(MapEntity map) {
+    protected Coordinate findTarget(WorldMap map) {
         List<Coordinate> herbivores = map.getCoordinatesByType(Herbivore.class);
         return map.findNearestCoordinate(getCoordinate(), herbivores);
     }
 
     @Override
-    protected void performAction(MapEntity map, Coordinate target) {
+    protected void performAction(WorldMap map, Coordinate target) {
         Entity entity = map.getEntity(target);
         if (entity instanceof Herbivore herbivore) {
             herbivore.setHp(getHp() - DEFAULT_ATTACK);
@@ -29,10 +30,5 @@ public class Predator extends Creature {
                 map.removeEntity(target);
             }
         }
-    }
-
-    @Override
-    public String imageOutputToConsole() {
-        return "🐺";
     }
 }
