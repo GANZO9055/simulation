@@ -1,7 +1,7 @@
 package ru.simulation.action;
 
-import ru.simulation.map.MapEntity;
+import ru.simulation.map.WorldMap;
 
 public interface Action {
-    void perform(MapEntity map);
+    void perform(WorldMap map);
 }
