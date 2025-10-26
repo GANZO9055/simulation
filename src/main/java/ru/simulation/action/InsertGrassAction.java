@@ -1,6 +1,6 @@
 package ru.simulation.action;
 
-import ru.simulation.map.WorldMap;
+import ru.simulation.game_map.WorldMap;
 
 public class InsertGrassAction implements Action {
     @Override
