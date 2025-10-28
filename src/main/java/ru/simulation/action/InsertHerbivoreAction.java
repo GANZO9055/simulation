@@ -26,7 +26,7 @@ public class InsertHerbivoreAction implements Action {
     private int counterHerbivore(Map<Coordinate, Entity> entityMap) {
         int countHerbivore = 0;
         for(var entity : entityMap.entrySet()) {
-            if (entity instanceof Herbivore) {
+            if (entity.getValue() instanceof Herbivore) {
                 countHerbivore++;
             }
         }

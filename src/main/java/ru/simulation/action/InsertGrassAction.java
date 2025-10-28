@@ -26,7 +26,7 @@ public class InsertGrassAction implements Action {
     private int counterGrass(Map<Coordinate, Entity> entityMap) {
         int countGrass = 0;
         for(var entity : entityMap.entrySet()) {
-           if (entity instanceof Grass) {
+           if (entity.getValue() instanceof Grass) {
                countGrass++;
            }
         }
