@@ -10,8 +10,8 @@ import java.util.Map;
 public class MoveAllCreatureAction implements Action {
     @Override
     public void perform(WorldMap map) {
-        Map<Coordinate, Entity> map1 = map.getEntities();
-        for (var entity : map1.entrySet()) {
+        Map<Coordinate, Entity> entities = map.getEntities();
+        for (var entity : entities.entrySet()) {
             if (entity.getValue() instanceof Creature creature) {
                 creature.makeMove(map);
             }
