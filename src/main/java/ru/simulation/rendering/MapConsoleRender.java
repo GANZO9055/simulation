@@ -16,8 +16,8 @@ public class MapConsoleRender implements Renderer {
     public void render(WorldMap map) {
         Map<Coordinate, Entity> entityMap = map.getEntities();
         StringBuilder mapConsole = new StringBuilder();
-        for (int x = 0; x < map.getSizeByX(); x++) {
-            for (int y = 0; y < map.getSizeByY(); y++) {
+        for (int x = 0; x < map.getWidth(); x++) {
+            for (int y = 0; y < map.getHeight(); y++) {
                 mapConsole.append(
                         getPicture(
                                 entityMap.get(new Coordinate(x, y))
