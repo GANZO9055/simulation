@@ -3,6 +3,7 @@ package ru.simulation.entity.creature;
 import ru.simulation.entity.Grass;
 import ru.simulation.game_map.Coordinate;
 import ru.simulation.game_map.WorldMap;
+import ru.simulation.game_map.WorldMapUtils;
 
 import java.util.List;
 
@@ -16,8 +17,9 @@ public class Herbivore extends Creature {
 
     @Override
     protected Coordinate findTarget(WorldMap map) {
+        WorldMapUtils worldMapUtils = new WorldMapUtils(map);
         List<Coordinate> grasses = map.getCoordinatesByType(Grass.class);
-        return map.findNearestCoordinate(getCoordinate(), grasses);
+        return worldMapUtils.findNearestCoordinate(getCoordinate(), grasses);
     }
 
     @Override

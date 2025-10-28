@@ -3,6 +3,7 @@ package ru.simulation.entity.creature;
 import ru.simulation.entity.Entity;
 import ru.simulation.game_map.Coordinate;
 import ru.simulation.game_map.WorldMap;
+import ru.simulation.game_map.WorldMapUtils;
 import ru.simulation.search_path.BFSPathFinder;
 import ru.simulation.search_path.PathFinder;
 
@@ -64,10 +65,11 @@ public abstract class Creature extends Entity {
 
     private void moveTowards(WorldMap map, Coordinate target) {
         PathFinder pathFinder = new BFSPathFinder();
+        WorldMapUtils worldMapUtils = new WorldMapUtils(map);
         List<Coordinate> path = pathFinder.findPath(coordinate, target, map, this.getClass());
         if (path.size() > 1) {
             Coordinate next = path.get(1);
-            map.moveEntity(this, coordinate, next);
+            worldMapUtils.moveEntity(this, coordinate, next);
             setCoordinate(next);
         }
     }

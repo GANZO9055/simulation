@@ -5,6 +5,7 @@ import ru.simulation.game_map.Coordinate;
 import ru.simulation.entity.creature.Herbivore;
 import ru.simulation.entity.creature.Predator;
 import ru.simulation.game_map.WorldMap;
+import ru.simulation.game_map.WorldMapUtils;
 
 import java.util.*;
 
@@ -58,8 +59,9 @@ public class BFSPathFinder implements PathFinder {
     }
 
     private boolean isValid(Coordinate coordinate, WorldMap map, Class<? extends Entity> type) {
+        WorldMapUtils worldMapUtils = new WorldMapUtils(map);
 
-        if (!map.checkCoordinate(coordinate)) {
+        if (!worldMapUtils.checkCoordinate(coordinate)) {
             return false;
         }
 
