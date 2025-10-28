@@ -11,14 +11,28 @@ import java.util.List;
 import java.util.Map;
 
 public class WorldMap {
-    private static final int DEFAULT_SIZE_BY_X = 10;
-    private static final int DEFAULT_SIZE_BY_Y = 10;
     private static final int QUANTITY_ENTITY = 10;
     private final Map<Coordinate, Entity> entities = new HashMap<>();
-    private final InsertEntity insertEntity = new InsertEntity();
+    private final EntityFactory entityFactory = new EntityFactory();
     private final GenerationNumber generationNumber = new GenerationNumber();
     private int countGrass = 0;
     private int countHerbivore = 0;
+
+    private final int sizeByX;
+    private final int sizeByY;
+
+    public WorldMap(int sizeByX, int sizeByY) {
+        this.sizeByX = sizeByX;
+        this.sizeByY = sizeByY;
+    }
+
+    public int getSizeByX() {
+        return sizeByX;
+    }
+
+    public int getSizeByY() {
+        return sizeByY;
+    }
 
     public void addEntity(Coordinate coordinate, Entity entity) {
         entities.put(coordinate, entity);
@@ -36,6 +50,29 @@ public class WorldMap {
         return new HashMap<>(entities);
     }
 
+    public <T extends Entity> List<Coordinate> getCoordinatesByType(Class<T> type) {
+        List<Coordinate> result = new ArrayList<>();
+        for (var value : entities.entrySet()) {
+            if (type.isInstance(value.getValue())) {
+                result.add(value.getKey());
+            }
+        }
+        return result;
+    }
+
+    public void createMap() {
+        for (int x = 0; x < getSizeByX(); x++) {
+            for (int y = 0; y < getSizeByY(); y++) {
+                addEntity(
+                        new Coordinate(x, y),
+                        entityFactory.entityGeneration(new Coordinate(x, y))
+                );
+            }
+        }
+    }
+
+
+
     public int getCountGrass() {
         return countGrass;
     }
@@ -44,22 +81,11 @@ public class WorldMap {
         return countHerbivore;
     }
 
-    public void createDefaultMap() {
-        for (int x = 0; x < DEFAULT_SIZE_BY_X; x++) {
-            for (int y = 0; y < DEFAULT_SIZE_BY_Y; y++) {
-                addEntity(
-                        new Coordinate(x, y),
-                        insertEntity.entityGeneration(new Coordinate(x, y))
-                );
-            }
-        }
-    }
-
     public void counterGrassAndHerbivore() {
         countGrass = 0;
         countHerbivore = 0;
-        for (int x = 0; x < DEFAULT_SIZE_BY_X; x++) {
-            for (int y = 0; y < DEFAULT_SIZE_BY_Y; y++) {
+        for (int x = 0; x < getSizeByX(); x++) {
+            for (int y = 0; y < getSizeByY(); y++) {
                 Entity entity = getEntity(new Coordinate(x,y));
                 if (entity instanceof Grass) {
                     countGrass++;
@@ -80,23 +106,13 @@ public class WorldMap {
     }
 
     public boolean checkCoordinate(Coordinate coordinate) {
-        return (coordinate.x() >= 0 && coordinate.x() < DEFAULT_SIZE_BY_X)
-                && (coordinate.y() >= 0 && coordinate.y() < DEFAULT_SIZE_BY_Y);
+        return (coordinate.x() >= 0 && coordinate.x() < getSizeByX())
+                && (coordinate.y() >= 0 && coordinate.y() < getSizeByY());
     }
 
     public void moveEntity(Creature entity, Coordinate from, Coordinate to) {
         removeEntity(from);
         addEntity(to, entity);
-    }
-
-    public <T extends Entity> List<Coordinate> getCoordinatesByType(Class<T> type) {
-        List<Coordinate> result = new ArrayList<>();
-        for (var value : entities.entrySet()) {
-            if (type.isInstance(value.getValue())) {
-                result.add(value.getKey());
-            }
-        }
-        return result;
     }
 
     public Coordinate findNearestCoordinate(Coordinate from, List<Coordinate> targets) {
@@ -120,11 +136,11 @@ public class WorldMap {
     private void insertGrassOrHerbivore(int number) {
         int quantity = generationNumber.getNumber(QUANTITY_ENTITY);
         while (quantity != 0) {
-            int x = generationNumber.getNumber(DEFAULT_SIZE_BY_X);
-            int y = generationNumber.getNumber(DEFAULT_SIZE_BY_Y);
+            int x = generationNumber.getNumber(getSizeByX());
+            int y = generationNumber.getNumber(getSizeByY());
             Coordinate newCoordinate = new Coordinate(x, y);
-            Entity newEntity = number == 1 ? insertEntity.grassGeneration()
-                    : insertEntity.herbivoreGeneration(newCoordinate);
+            Entity newEntity = number == 1 ? entityFactory.grassGeneration()
+                    : entityFactory.herbivoreGeneration(newCoordinate);
             if (getEntity(newCoordinate) == null) {
                 addEntity(newCoordinate, newEntity);
                 quantity--;

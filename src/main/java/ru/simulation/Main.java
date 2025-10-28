@@ -12,14 +12,22 @@ public class Main {
     private static final int EXIT_SIMULATION = 3;
 
     public static void main(String[] args) {
-        WorldMap worldMap = new WorldMap();
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Введите размер карты");
+        System.out.print("По X: ");
+        int sizeByX = input.nextInt();
+        System.out.print("По Y: ");
+        int sizeByY = input.nextInt();
+
+        WorldMap worldMap = new WorldMap(sizeByX, sizeByY);
         Renderer render = new MapConsoleRender();
         Simulation simulation = new Simulation(worldMap, render);
+
         while (true) {
             System.out.println("Произвести один ход? Введите 1");
             System.out.println("Произвести долгую симуляцию? Введите 2");
             System.out.println("Выйти из симуляции. Введите 3");
-            Scanner input = new Scanner(System.in);
             int result = input.nextInt();
             if (result == ONE_MOVE) {
                 simulation.nextTurn();

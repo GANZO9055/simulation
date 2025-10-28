@@ -4,10 +4,10 @@ import ru.simulation.entity.*;
 import ru.simulation.entity.creature.Herbivore;
 import ru.simulation.entity.creature.Predator;
 
-public class InsertEntity {
+public class EntityFactory {
     private final GenerationNumber generationNumber;
 
-    public InsertEntity() {
+    public EntityFactory() {
         this.generationNumber = new GenerationNumber();
     }
 
