@@ -12,7 +12,7 @@ public class InitializationAction implements Action {
             for (int y = 0; y < map.getHeight(); y++) {
                 map.addEntity(
                         new Coordinate(x, y),
-                        entityFactory.entityGeneration(new Coordinate(x, y))
+                        entityFactory.createEntity(new Coordinate(x, y))
                 );
             }
         }

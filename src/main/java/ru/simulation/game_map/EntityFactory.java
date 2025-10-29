@@ -5,14 +5,15 @@ import ru.simulation.entity.creature.Herbivore;
 import ru.simulation.entity.creature.Predator;
 
 public class EntityFactory {
+    private final static int MAXIMUM_PROBABILITY = 20;
     private final GenerationNumber generationNumber;
 
     public EntityFactory() {
         this.generationNumber = new GenerationNumber();
     }
 
-    public Entity entityGeneration(Coordinate coordinate) {
-        int value = generationNumber.getNumber(20);
+    public Entity createEntity(Coordinate coordinate) {
+        int value = generationNumber.getNumber(MAXIMUM_PROBABILITY);
         return switch (value) {
             case 0, 1 -> new Grass(); // 0, 1 - 10% вероятность появления
             case 2, 3 -> new Rock(); // 2, 3 - 10%
@@ -23,11 +24,11 @@ public class EntityFactory {
         };
     }
 
-    public Entity grassGeneration() {
+    public Entity createGrass() {
         return new Grass();
     }
 
-    public Entity herbivoreGeneration(Coordinate coordinate) {
+    public Entity createHerbivore(Coordinate coordinate) {
         return new Herbivore(coordinate);
     }
 }

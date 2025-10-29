@@ -32,6 +32,10 @@ public class Simulation {
         initialization();
     }
 
+    public int getCounterOfMoves() {
+        return counterOfMoves;
+    }
+
     public void initialization() {
         for (Action action : initActions) {
             action.perform(map);
@@ -68,7 +72,7 @@ public class Simulation {
         pauseSimulation(thread);
     }
 
-    public void pauseSimulation(Thread thread) {
+    private void pauseSimulation(Thread thread) {
         System.out.println("Остановить симуляцию?");
         System.out.println("Введите 1, если да!");
         Scanner input = new Scanner(System.in);
@@ -80,9 +84,5 @@ public class Simulation {
             }
             System.out.println("Неправильное число, введите 1, чтобы остановить симуляцию!");
         }
-    }
-
-    public int getCounterOfMoves() {
-        return counterOfMoves;
     }
 }

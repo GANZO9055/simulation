@@ -16,11 +16,11 @@ public class Main {
 
         System.out.println("Введите размер карты");
         System.out.print("По X: ");
-        int sizeByX = input.nextInt();
+        int width = input.nextInt();
         System.out.print("По Y: ");
-        int sizeByY = input.nextInt();
+        int height = input.nextInt();
 
-        WorldMap worldMap = new WorldMap(sizeByX, sizeByY);
+        WorldMap worldMap = new WorldMap(width, height);
         Renderer render = new MapConsoleRender();
         Simulation simulation = new Simulation(worldMap, render);
 

@@ -41,7 +41,7 @@ public class InsertGrassAction implements Action {
             int x = generationNumber.getNumber(map.getWidth());
             int y = generationNumber.getNumber(map.getHeight());
             Coordinate newCoordinate = new Coordinate(x, y);
-            Entity newEntity = entityFactory.grassGeneration();
+            Entity newEntity = entityFactory.createGrass();
             if (map.getEntity(newCoordinate) == null) {
                 map.addEntity(newCoordinate, newEntity);
                 quantity--;
